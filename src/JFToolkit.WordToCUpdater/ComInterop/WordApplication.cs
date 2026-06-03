@@ -65,7 +65,7 @@ internal sealed class WordApplication : IDisposable
     {
         ThrowIfDisposed();
 
-        _docs ??= _word is dynamic w ? w.Documents : throw new InvalidOperationException();
+        _docs ??= ((dynamic)_word!).Documents;
 
         dynamic docs = _docs;
         dynamic doc;
@@ -103,8 +103,9 @@ internal sealed class WordApplication : IDisposable
 
         try
         {
-            if (_word is dynamic w)
+            if (_word is not null)
             {
+                dynamic w = _word;
                 // Quit without saving changes to any remaining docs
                 w.Quit(SaveChanges: 0, OriginalFormat: 0, RouteDocument: 0);
             }
