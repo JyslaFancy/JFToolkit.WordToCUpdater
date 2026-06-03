@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\WordTocUpdater\WordTocUpdater.csproj" />
+    <ProjectReference Include="..\..\src\JFToolkit.WordToCUpdater\JFToolkit.WordToCUpdater.csproj" />
   </ItemGroup>
 
 </Project>
