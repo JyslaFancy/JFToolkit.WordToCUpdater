@@ -1,0 +1,6 @@
+title: JFToolkit.WordToCUpdater
+description: Zero-dependency NuGet for updating Word Table of Contents
+theme: jekyll-theme-cayman
+show_downloads: false
+github:
+  repository_url: https://github.com/JyslaFancy/JFToolkit.WordToCUpdater
