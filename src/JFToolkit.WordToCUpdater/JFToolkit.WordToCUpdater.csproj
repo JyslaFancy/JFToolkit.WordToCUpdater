@@ -11,7 +11,7 @@
     <!-- NuGet metadata -->
     <PackageId>JFToolkit.WordToCUpdater</PackageId>
     <Version>0.1.0</Version>
-    <Authors>You</Authors>
+    <Authors>Harald Daltveit</Authors>
     <Description>
       Zero-dependency COM interop wrapper for updating Word Table of Contents
       with correct page numbers. Works with Word 2007 through Office 365.
