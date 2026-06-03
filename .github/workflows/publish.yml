@@ -57,7 +57,8 @@ jobs:
 
       - name: Push to NuGet
         run: |
-          dotnet nuget push ./nupkgs/*.nupkg `
+          $nupkg = Get-ChildItem ./nupkgs/*.nupkg | Select-Object -First 1
+          dotnet nuget push $nupkg `
             --api-key ${{ secrets.NUGET_API_KEY }} `
             --source https://api.nuget.org/v3/index.json `
             --skip-duplicate
