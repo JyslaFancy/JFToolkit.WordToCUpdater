@@ -11,7 +11,7 @@ namespace JFToolkit.WordToCUpdater;
 /// The queue processes one document at a time (Word is single-instance),
 /// but exposes an async API so your application doesn't block.
 /// </summary>
-public sealed class TocUpdateQueue : IDisposable
+public sealed class TocUpdateQueue : IDisposable, IAsyncDisposable
 {
     private readonly Thread _staThread;
     private readonly BlockingCollection<WorkItem> _queue = new();
@@ -23,7 +23,7 @@ public sealed class TocUpdateQueue : IDisposable
     {
         _staThread = new Thread(RunStaPump)
         {
-            Name = "WordTocUpdater-STA",
+            Name = "TocUpdater-STA",
             IsBackground = true,
         };
         _staThread.SetApartmentState(ApartmentState.STA);
@@ -144,6 +144,14 @@ public sealed class TocUpdateQueue : IDisposable
         {
             return TocUpdateResult.Failed(ex.Message, sw.Elapsed);
         }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_disposed) return;
+        
+        // Run the sync dispose on a thread pool thread to avoid blocking
+        await Task.Run(() => Dispose());
     }
 
     public void Dispose()

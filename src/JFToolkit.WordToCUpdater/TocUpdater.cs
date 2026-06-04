@@ -6,11 +6,11 @@ namespace JFToolkit.WordToCUpdater;
 /// Synchronous one-shot API. For async usage, use <see cref="TocUpdateQueue"/> instead.
 /// 
 /// Usage:
-///   var result = WordTocUpdater.Update("C:\\docs\\report.docx");
+///   var result = TocUpdater.Update("C:\\docs\\report.docx");
 ///   if (result.Success)
 ///       Console.WriteLine($"Updated {result.TocsUpdated} TOCs. {result.PagesAfter} pages.");
 /// </summary>
-public static class WordTocUpdater
+public static class TocUpdater
 {
     /// <summary>
     /// Update all TOC fields in a Word document to correct page numbers.

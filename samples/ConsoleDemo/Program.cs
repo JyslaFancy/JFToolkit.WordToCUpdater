@@ -2,15 +2,15 @@ using JFToolkit.WordToCUpdater;
 using JFToolkit.WordToCUpdater.Model;
 
 // ──────────────────────────────────────────────
-// WordTocUpdater — Console Demo
+// TocUpdater — Console Demo
 // ──────────────────────────────────────────────
 
-Console.WriteLine("WordTocUpdater Demo");
+Console.WriteLine("TocUpdater Demo");
 Console.WriteLine("===================");
 Console.WriteLine();
 
 // 1. Detect Word version
-var version = WordTocUpdater.DetectVersion();
+var version = TocUpdater.DetectVersion();
 Console.WriteLine($"Word version detected: {version}");
 Console.WriteLine();
 
@@ -23,7 +23,7 @@ if (version == "NotInstalled")
 
 // 2. Single document — one-liner
 Console.WriteLine("--- One-liner update ---");
-var result = WordTocUpdater.Update(@"C:\demo\report.docx");
+var result = TocUpdater.Update(@"C:\demo\report.docx");
 Console.WriteLine(result.Success
     ? $"✓ {result.TocsUpdated} TOC(s) updated. " +
       $"Pages: {result.PagesBefore} → {result.PagesAfter}. " +
@@ -39,7 +39,7 @@ var opts = new TocUpdateOptions
     CreateBackup = true,
     UpdateAllFields = true          // Also update cross-refs, page refs
 };
-result = WordTocUpdater.Update(@"C:\demo\contract.docx", opts);
+result = TocUpdater.Update(@"C:\demo\contract.docx", opts);
 Console.WriteLine(result.Success
     ? $"✓ Full rebuild done. Backup at contract.docx.bak"
     : $"✗ Failed: {result.Error}");

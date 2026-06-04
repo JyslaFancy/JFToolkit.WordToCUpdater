@@ -36,7 +36,7 @@ No other dependencies. No Office PIA references. No SDK requirements beyond .NET
 ```csharp
 using JFToolkit.WordToCUpdater;
 
-var result = JFToolkit.WordToCUpdater.Update(@"C:\Reports\Q2-Report.docx");
+var result = TocUpdater.Update(@"C:\Reports\Q2-Report.docx");
 
 Console.WriteLine(result.Success
     ? $"Done. {result.TocsUpdated} TOCs updated. {result.Elapsed.TotalSeconds:F1}s"
@@ -46,7 +46,7 @@ Console.WriteLine(result.Success
 ### With options
 
 ```csharp
-var result = JFToolkit.WordToCUpdater.Update(@"C:\Reports\spec.docx", new TocUpdateOptions
+var result = TocUpdater.Update(@"C:\Reports\spec.docx", new TocUpdateOptions
 {
     UpdatePageNumbersOnly = false,  // full rebuild — use if headings changed
     CreateBackup = true,            // leaves spec.docx.bak
@@ -74,7 +74,7 @@ foreach (var r in results)
 ### Check if Word is installed
 
 ```csharp
-var version = JFToolkit.WordToCUpdater.DetectVersion();
+var version = TocUpdater.DetectVersion();
 // "Office365", "Word2016", "Word2013", "NotInstalled", etc.
 ```
 
