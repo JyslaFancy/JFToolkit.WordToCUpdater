@@ -1,6 +1,6 @@
 # JFToolkit.WordToCUpdater
 
-**Zero-dependency NuGet that updates Word Table of Contents page numbers.
+**Zero NuGet dependencies. Updates Word Table of Contents page numbers.
 Works with Word 2007 through Office 365. No version coupling.**
 
 [![NuGet](https://img.shields.io/badge/nuget-v0.1.0-blue)](https://www.nuget.org/packages/JFToolkit.WordToCUpdater)
@@ -27,7 +27,7 @@ generates Word reports. This library makes it one line of code.
 dotnet add package JFToolkit.WordToCUpdater
 ```
 
-No other dependencies. No Office PIA references. No SDK requirements beyond .NET 8+.
+No NuGet dependencies. No Office PIA references. No SDK requirements beyond .NET 8+.
 
 ## Usage
 
@@ -120,7 +120,7 @@ The `WordVersion` enum is informational only — no behaviour branches on versio
 - Does not create or format TOC fields (use Open XML SDK for document creation)
 - Does not render Word → PDF
 - Does not run on Linux/macOS (Word COM is Windows-only)
-- Does not handle password-protected documents
+- Does not handle password-protected documents (throws immediately with clear error)
 
 ## Building from source
 

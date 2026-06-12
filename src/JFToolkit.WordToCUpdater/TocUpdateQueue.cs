@@ -16,7 +16,7 @@ public sealed class TocUpdateQueue : IDisposable, IAsyncDisposable
     private readonly Thread _staThread;
     private readonly BlockingCollection<WorkItem> _queue = new();
     private readonly CancellationTokenSource _cts = new();
-    private bool _started;
+    private int _started;
     private bool _disposed;
 
     public TocUpdateQueue()
@@ -51,9 +51,8 @@ public sealed class TocUpdateQueue : IDisposable, IAsyncDisposable
         _queue.Add(new WorkItem(documentPath, options, tcs));
 
         // Start the STA thread lazily on first enqueue
-        if (!_started)
+        if (Interlocked.Exchange(ref _started, 1) == 0)
         {
-            _started = true;
             _staThread.Start();
         }
 

@@ -13,9 +13,10 @@
     <Version>0.3.0</Version>
     <Authors>Harald Daltveit</Authors>
     <Description>
-      Zero-dependency COM interop wrapper for updating Word Table of Contents
+      Lightweight COM interop wrapper for updating Word Table of Contents
       with correct page numbers. Works with Word 2007 through Office 365.
       Late-bound — no compile-time coupling to any specific Word version.
+      Zero NuGet dependencies; requires Windows + Microsoft Word.
     </Description>
     <PackageTags>word;toc;table-of-contents;com-interop;office;document-automation</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

@@ -38,8 +38,14 @@ internal static class ComHelper
     }
 
     /// <summary>
-    /// Force GC to collect any unreachable RCWs.
+    /// Force GC to collect any unreachable RCWs so Word.exe can exit.
     /// Call after releasing the root COM object (Word.Application).
+    /// 
+    /// The double-Collect pattern (Collect → WaitForPendingFinalizers → Collect)
+    /// is deliberate for COM interop: the first Collect promotes finalizable
+    /// RCWs to the finalizer queue; WaitForPendingFinalizers drains that queue;
+    /// the second Collect sweeps any objects resurrected during finalization.
+    /// Without this, orphaned RCWs can keep WINWORD.EXE alive after Dispose().
     /// </summary>
     public static void CollectFinalizers()
     {
