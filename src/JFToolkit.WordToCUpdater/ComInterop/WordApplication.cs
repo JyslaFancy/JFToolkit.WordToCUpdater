@@ -89,7 +89,7 @@ internal sealed class WordApplication : IDisposable
         }
         catch (Exception ex)
         {
-            var message = $"Failed to open '{path}'.";
+            var message = $"Failed to open '{System.IO.Path.GetFileName(path)}'.";
             if (ex.Message.Contains("password", StringComparison.OrdinalIgnoreCase) ||
                 ex.Message.Contains("encrypt", StringComparison.OrdinalIgnoreCase) ||
                 ex.Message.Contains("protected", StringComparison.OrdinalIgnoreCase))

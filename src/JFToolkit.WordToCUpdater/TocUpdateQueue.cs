@@ -80,7 +80,7 @@ public sealed class TocUpdateQueue : IDisposable, IAsyncDisposable
             while (_queue.TryTake(out var remaining))
             {
                 remaining.Completion.TrySetResult(
-                    TocUpdateResult.Failed($"STA pump crashed: {ex.Message}", TimeSpan.Zero));
+                    TocUpdateResult.Failed("STA pump crashed: internal error", TimeSpan.Zero));
             }
         }
     }
@@ -94,7 +94,8 @@ public sealed class TocUpdateQueue : IDisposable, IAsyncDisposable
             // Pre-flight checks
             if (!System.IO.File.Exists(item.Path))
             {
-                return TocUpdateResult.Failed($"File not found: {item.Path}", sw.Elapsed);
+                return TocUpdateResult.Failed(
+                    $"File not found: {System.IO.Path.GetFileName(item.Path)}", sw.Elapsed);
             }
 
             var version = WordVersionDetector.Detect();
@@ -150,7 +151,12 @@ public sealed class TocUpdateQueue : IDisposable, IAsyncDisposable
         }
         catch (Exception ex)
         {
-            return TocUpdateResult.Failed(ex.Message, sw.Elapsed);
+            // Avoid leaking raw COM exception text (HRESULT, registry paths, etc.)
+            // or full file paths to the caller. IOException (our own) is already safe.
+            var error = ex is IOException
+                ? ex.Message
+                : "An error occurred during Word processing.";
+            return TocUpdateResult.Failed(error, sw.Elapsed);
         }
     }
 
