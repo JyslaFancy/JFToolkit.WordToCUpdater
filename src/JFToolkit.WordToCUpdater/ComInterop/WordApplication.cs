@@ -61,6 +61,13 @@ internal sealed class WordApplication : IDisposable
     /// <summary>
     /// Open a document. Returns a WordDocument wrapper that must be disposed.
     /// </summary>
+    /// <remarks>
+    /// <para><b>Password-protected documents:</b> <c>PasswordDocument: ""</c> tells Word
+    /// that no password is available. Encrypted documents throw immediately
+    /// instead of showing a password dialog that would block the STA thread
+    /// (because <c>DisplayAlerts = 0</c> does not suppress the built-in
+    /// password prompt, which is a different dialog class).</para>
+    /// </remarks>
     public WordDocument OpenDocument(string path)
     {
         ThrowIfDisposed();
@@ -72,15 +79,28 @@ internal sealed class WordApplication : IDisposable
 
         try
         {
+            // PasswordDocument: "" → fail fast on encrypted docs instead of
+            // blocking the STA thread with a password dialog that never resolves
             doc = docs.Open(
                 FileName: path,
                 ReadOnly: false,
+                PasswordDocument: "",
                 Visible: false);
         }
         catch (Exception ex)
         {
-            throw new IOException(
-                $"Failed to open '{path}'. Is the file locked or does it exist?", ex);
+            var message = $"Failed to open '{path}'.";
+            if (ex.Message.Contains("password", StringComparison.OrdinalIgnoreCase) ||
+                ex.Message.Contains("encrypt", StringComparison.OrdinalIgnoreCase) ||
+                ex.Message.Contains("protected", StringComparison.OrdinalIgnoreCase))
+            {
+                message += " The document may be password-protected or encrypted.";
+            }
+            else
+            {
+                message += " Is the file locked or does it exist?";
+            }
+            throw new IOException(message, ex);
         }
 
         return new WordDocument(doc);
