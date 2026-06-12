@@ -32,6 +32,14 @@ public sealed class TocUpdateQueue : IDisposable, IAsyncDisposable
     /// <summary>
     /// Enqueue a TOC update. The returned Task completes when the update finishes.
     /// </summary>
+    /// <remarks>
+    /// <para><b>Security:</b> <paramref name="documentPath"/> is passed to
+    /// <see cref="File.Copy(string, string, bool)"/> (backup) and
+    /// <see cref="WordDocument.SaveAs"/> (output path) without path validation.
+    /// The caller is responsible for ensuring both the document path and
+    /// <see cref="TocUpdateOptions.OutputPath"/> are trusted and resolve to
+    /// intended locations.</para>
+    /// </remarks>
     public Task<TocUpdateResult> EnqueueAsync(
         string documentPath, TocUpdateOptions? options = null)
     {

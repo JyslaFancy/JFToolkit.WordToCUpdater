@@ -9,6 +9,11 @@ namespace JFToolkit.WordToCUpdater;
 ///   var result = TocUpdater.Update("C:\\docs\\report.docx");
 ///   if (result.Success)
 ///       Console.WriteLine($"Updated {result.TocsUpdated} TOCs. {result.PagesAfter} pages.");
+///       
+/// <para><b>Security:</b> <paramref name="documentPath"/> and
+/// <see cref="TocUpdateOptions.OutputPath"/> are passed to the file system and Word COM
+/// without path validation. The caller is responsible for ensuring
+/// these values are trusted and resolve to intended locations.</para>
 /// </summary>
 public static class TocUpdater
 {
