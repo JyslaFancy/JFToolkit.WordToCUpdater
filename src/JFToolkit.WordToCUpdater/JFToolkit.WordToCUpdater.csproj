@@ -10,7 +10,7 @@
     
     <!-- NuGet metadata -->
     <PackageId>JFToolkit.WordToCUpdater</PackageId>
-    <Version>0.3.0</Version>
+    <Version>0.4.0</Version>
     <Authors>Harald Daltveit</Authors>
     <Description>
       Lightweight COM interop wrapper for updating Word Table of Contents

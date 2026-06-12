@@ -73,7 +73,7 @@ public sealed class TocUpdateQueue : IDisposable, IAsyncDisposable
         {
             // Normal shutdown
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // If the pump crashes, complete remaining items as failed
             while (_queue.TryTake(out var remaining))
